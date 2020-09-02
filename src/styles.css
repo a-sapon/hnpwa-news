@@ -23,9 +23,18 @@ a {
   color: inherit;
 }
 
+a:hover {
+  color: #0000ff;
+}
+
+a:active {
+  color: #000099;
+  text-decoration: underline;
+}
+
 #table {
   margin: 20px auto;
-  width: 60vw;
+  width: 80vw;
   table-layout: fixed;
 }
 
@@ -41,12 +50,9 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 
-#back, #next {
-  padding: 4px 20px;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-#back {
-  margin-right: 20px;
+#footer {
+  padding: 10px 0;
+  border-top: 0.5px solid #c5c5c5;
+  font-size: 13px;
+  color: #5c5c5c;
 }

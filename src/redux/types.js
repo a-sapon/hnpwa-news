@@ -1,0 +1,4 @@
+export default {
+  GET_NEWS: 'GET_NEWS',
+  INCREMENT_PAGE: 'INCREMENT_PAGE'
+};

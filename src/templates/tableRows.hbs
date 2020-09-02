@@ -1,0 +1,12 @@
+
+{{#each items}}
+<tr id={{this.id}}>
+  <td>{{this.time_ago}}</td>
+  <td> <a href={{this.url}} target="_blank" rel="noopener noreferrer">{{this.title}}</a> </td>
+  <td>
+    {{#if this.domain}}
+    {{this.domain}}
+    {{/if}}
+  </td>
+</tr>
+{{/each}}

@@ -1,44 +1,37 @@
+import configureStore from './redux/store';
+import { fetchNews } from './redux/operations';
+import { incrementPage } from './redux/actionCreators';
+import tableRows from './templates/tableRows.hbs';
 import './styles.css';
 
-import newsServices from './services/newsServices';
-
-const refs = {
-  tableBody: document.getElementById('table-body'),
-  backBtn: document.getElementById('back'),
-  nextBtn: document.getElementById('next'),
-}
+export const store = configureStore();
 
 window.addEventListener('DOMContentLoaded', showNews);
-refs.backBtn.addEventListener('click', showPrevPage);
-refs.nextBtn.addEventListener('click', showNextPage);
 
 async function showNews() {
-  refs.tableBody.innerHTML = '';
-  const news = await newsServices.fetchNews();
-  const markup = createMarkup(news);
-  refs.tableBody.insertAdjacentHTML('beforeend', markup);
+  await store.dispatch(fetchNews());
+  const news = store.getState().news;
+  const data = { items: news };
+  const markup = tableRows(data);
+  document.getElementById('table-body').insertAdjacentHTML('beforeend', markup);
 
-  console.log('news', news);
-}
+  const lastItemId = news[news.length - 1].id;
+  const lastDomItem = document.getElementById(lastItemId);
 
-function createMarkup(arr) {
-  return arr.reduce((acc, value) => {
-    return acc += `
-    <tr>
-      <td>${value.time_ago}</td>
-      <td>${value.title}</td>
-      <td>${value.domain}</td>
-    </tr>
-    `;
-  }, '');
-}
+  const options = { threshold: 1.0 };
 
-function showPrevPage() {
-  newsServices.decrementPage();
-  showNews();
-}
+  const observer = new IntersectionObserver(onEntry, options);
+  observer.observe(lastDomItem);
 
-function showNextPage() {
-  newsServices.incrementPage();
-  showNews();
+  function onEntry(entries) {
+    if (entries[0].isIntersecting) {
+      observer.unobserve(lastDomItem);
+      store.dispatch(incrementPage());
+      showNews();
+    }
+  }
+
+  if (store.getState().page > 9) {
+    observer.unobserve(lastDomItem);
+  }
 }
