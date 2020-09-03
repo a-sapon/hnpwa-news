@@ -27,15 +27,9 @@ a:hover {
   color: #0000ff;
 }
 
-a:active {
+a:active, .active {
   color: #000099;
   text-decoration: underline;
-}
-
-#table {
-  margin: 20px auto;
-  width: 80vw;
-  table-layout: fixed;
 }
 
 td, th {
@@ -46,8 +40,20 @@ td, th {
   text-align: center;
 }
 
+td a {
+  max-height: 63px;
+  overflow: hidden;
+}
+
 tr:nth-child(even) {
   background-color: #dddddd;
+}
+
+#table {
+  margin: 20px auto;
+  width: 80vw;
+  table-layout: fixed;
+  position: relative;
 }
 
 #footer {
@@ -55,4 +61,34 @@ tr:nth-child(even) {
   border-top: 0.5px solid #c5c5c5;
   font-size: 13px;
   color: #5c5c5c;
+}
+
+#time, #domain {
+  display: none;
+}
+
+#sortBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1;
+  width: 54px;
+  line-height: 14px;
+  font-size: 10px;
+  padding: 6px 10px;
+  background-color: #404040;
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  outline: none;
+}
+
+@media (min-width: 768px) {
+  #time, #domain {
+    display: table-cell;
+  }
+
+  #sortBtn {
+    display: none;
+  }
 }
